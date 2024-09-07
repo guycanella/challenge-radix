@@ -8,7 +8,7 @@ def home():
 
 @app.get("/data-sensor")
 def get_data_sensor():
-    return {}
+    return { "message": "Get Data from database." }
 
 @app.post("/data-sensor")
 def post_data_sensor():
