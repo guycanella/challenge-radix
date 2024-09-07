@@ -13,6 +13,8 @@ psycopg2-binary = "^2.9.9"
 alembic = "^1.13.2"
 python-decouple = "^3.8"
 faker = "^28.4.1"
+uvicorn = "^0.30.6"
+pandas = "^2.2.2"
 
 
 [build-system]
