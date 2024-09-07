@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "radix-challenge"
+version = "0.1.0"
+description = "Backend for the challenge Radix project"
+authors = ["Guilherme <guycanella@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.114.0"
+sqlalchemy = "^2.0.34"
+psycopg2-binary = "^2.9.9"
+alembic = "^1.13.2"
+python-decouple = "^3.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
