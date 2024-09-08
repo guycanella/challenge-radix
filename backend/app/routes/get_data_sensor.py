@@ -15,7 +15,10 @@ def get_data_sensor(period: Union[str, None] = None, db: Session = Depends(get_d
     if period is None:
         results = db.query(SensorDataModel).all()
 
-        return { "data": convert_query_to_json(results) }
+        json_results = convert_query_to_json(results)
+        average_values = calculate_average_sensor_data(json_results)
+
+        return { "data": average_values }
 
     if period not in possible_periods:
         raise HTTPException(status_code=404, detail="Period not found.")
