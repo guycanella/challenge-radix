@@ -258,7 +258,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * @title FastAPI
  * @version 0.1.0
  */
-export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+export class Api<SecurityDataType> extends HttpClient<SecurityDataType> {
   dataSensor = {
     /**
      * No description
