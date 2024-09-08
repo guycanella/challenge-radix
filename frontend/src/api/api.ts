@@ -34,6 +34,12 @@ export interface SensorDataPayload {
   timestamp?: string | null;
 }
 
+/** SensorDataResponse */
+export interface SensorDataResponse {
+  /** Data */
+  data: SensorDataPayload[];
+}
+
 /** ValidationError */
 export interface ValidationError {
   /** Location */
@@ -258,7 +264,7 @@ export class HttpClient<SecurityDataType = unknown> {
  * @title FastAPI
  * @version 0.1.0
  */
-export class Api<SecurityDataType> extends HttpClient<SecurityDataType> {
+export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
   dataSensor = {
     /**
      * No description
@@ -274,7 +280,7 @@ export class Api<SecurityDataType> extends HttpClient<SecurityDataType> {
       },
       params: RequestParams = {},
     ) =>
-      this.request<any, HTTPValidationError>({
+      this.request<SensorDataResponse, HTTPValidationError>({
         path: `/data-sensor`,
         method: "GET",
         query: query,
