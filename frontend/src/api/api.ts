@@ -24,10 +24,18 @@ export interface HTTPValidationError {
   detail?: ValidationError[];
 }
 
+/** SensorDataItem */
+export interface SensorDataItem {
+  /** Equipmentid */
+  equipmentId: string;
+  /** Value */
+  value: number;
+}
+
 /** SensorDataPayload */
 export interface SensorDataPayload {
-  /** Equipamentid */
-  equipamentId: string;
+  /** Equipmentid */
+  equipmentId: string;
   /** Value */
   value: number;
   /** Timestamp */
@@ -37,7 +45,7 @@ export interface SensorDataPayload {
 /** SensorDataResponse */
 export interface SensorDataResponse {
   /** Data */
-  data: SensorDataPayload[];
+  data: SensorDataItem[];
 }
 
 /** ValidationError */

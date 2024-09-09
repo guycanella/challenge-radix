@@ -3,13 +3,13 @@ from sqlalchemy.orm import Session
 from db.connection import get_db
 from db.models import SensorDataModel
 from io import StringIO
+from schemas import SensorDataPayload
 import pandas as pd
 
 router = APIRouter()
 
 @router.post('/data-sensor/csv')
 async def insert_data_sensor_csv(file: UploadFile = File(...), db: Session = Depends(get_db)):
-    print(file.content_type)
     if file.content_type != 'text/csv':
         raise HTTPException(status_code = 400, detail = "Invalid file type. Please upload a CSV file.")
 
@@ -20,14 +20,21 @@ async def insert_data_sensor_csv(file: UploadFile = File(...), db: Session = Dep
         if not {'equipmentId', 'value', 'timestamp'}.issubset(df.columns):
             raise HTTPException(status_code = 400, detail = "CSV file must contain columns: equipmentId, value, timestamp.")
 
-        rows = df.to_dict(orient='records')
+        rows = df.to_dict(orient = 'records')
 
         for row in rows:
-            data = SensorDataModel(
-                equipament_id = row['equipmentId'],
+            validated_data = SensorDataPayload(
+                equipmentId = row['equipmentId'],
                 value = row['value'],
-                timestamp = pd.to_datetime(row['timestamp'])
+                timestamp = pd.to_datetime(row['timestamp']) if 'timestamp' in row else None
             )
+
+            data = SensorDataModel(
+                equipment_id = validated_data.equipmentId,
+                value = validated_data.value,
+                timestamp = validated_data.timestamp
+            )
+
             db.add(data)
 
         db.commit()

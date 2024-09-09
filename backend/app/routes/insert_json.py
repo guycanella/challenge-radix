@@ -12,7 +12,7 @@ def insert_data_sensor(payload: schemas.SensorDataPayload, db: Session = Depends
     timestamp = payload.timestamp if payload.timestamp else datetime.now()
 
     new_data = SensorDataModel(
-        equipament_id = payload.equipamentId,
+        equipment_id = payload.equipmentId,
         value = payload.value,
         timestamp = timestamp
     )
