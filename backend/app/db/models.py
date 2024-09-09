@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Numeric, DateTime
 import datetime
-from db.base import Base
+from app.db.base import Base
 
 class SensorDataModel(Base):
     __tablename__ = 'data_sensor'
