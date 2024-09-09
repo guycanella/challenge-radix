@@ -39,7 +39,7 @@ const Graph = ({ data }: GraphProps) => {
     <>
         <h2 className='flex justify-center text-xl font-bold'>{onTitle(period)}</h2>
 
-        <div className='pt-8 w-[70%] h-[400px] mx-auto'>
+        <div className='xs:w-[90%] pt-8 md:w-[70%] h-[400px] mx-auto'>
             <ResponsiveContainer>
                 <LineChart data={data?.data}>
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />

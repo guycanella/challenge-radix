@@ -1,4 +1,4 @@
-import { createContext, useState, useMemo } from 'react'
+import { createContext, useMemo } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 import Home from './components/Home'
@@ -36,26 +36,20 @@ const HOURS = [
 type HoursType = typeof HOURS[0]
 
 type ContextData = {
-  selectedData: HoursType
-  setSelectedData: React.Dispatch<React.SetStateAction<HoursType>>
   hours: HoursType[]
 }
 
 export const Context = createContext({} as ContextData)
 
 function App() {
-  const [selectedData, setSelectedData] = useState<HoursType>(HOURS[0])
-
-  console.log({ title: selectedData.label })
-
   const value = useMemo(() => {
-    return { selectedData, setSelectedData, hours: HOURS }
-  }, [selectedData, setSelectedData])
+    return { hours: HOURS }
+  }, [])
 
   return (
-    <main className='w-[80%] mx-auto min-h-screen py-4'>
+    <main className='xs:w-[90%] md:w-[80%] mx-auto min-h-screen py-4'>
       <h1
-        className='text-3xl font-bold py-8 px-2 bg-gradient-to-r from-[#2A1844] to-[#532F88] text-white'
+        className='xs:text-2xl sm:text-3xl font-bold py-8 px-2 bg-gradient-to-r from-[#2A1844] to-[#532F88] text-white'
       >
         Dados dos sensores
       </h1>
