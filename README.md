@@ -10,13 +10,16 @@
 <h2>The Challenge</h2>
 
 <p>
-    You work for a company which installed sensors in their equipments. Your job is to develop an API which capture the measures of these sensors in real-time. To solve this problem I assumed some points:
+    You work for a company which installed sensors in their equipments. Your job is to develop an API that can capture the measures of these sensors in real-time. To solve this problem I assumed some points:
     <ol>
-        <li>I worked only with 10 equipments and each equipment has 1 sensor attached to it.</li>
+        <li>I worked only with 10 equipments and 1 sensor attached per equipment.</li>
         <li>The equipmentId of the equipments varies from EQ-12486 to EQ-12495.</li>
-        <li>The sensor measurement interval is 2h, so each sensor capture 12 measures per day.</li>
-        <li>The possible values measured by the sensor, rise between 0.0 and 90.0.</li>
+        <li>The sensor measurement interval is 2h, so each sensor captures 12 measures per day.</li>
+        <li>The possible values measured by the sensors, rise between 0.0 and 90.0.</li>
     </ol>
+    <p>
+        <b>Obs:</b> if you want to consider more equipments or more than one sensor per equipment or the value each sensor can measure, you just need to make some changes in file <code>generate_sensor_data.py</code> (backend/app/db), and in the SensorDataPayload class in file <code>schemas.py</code> (backend/app).
+    </p>
 </p>
 
 <h2>The Project</h2>
@@ -58,7 +61,7 @@ $ ./install_dependencies.sh
 ```
 
 <p>
-    <b>Obs:</b> you will need <code>poetry</code> and one of javascript package managers (<code>pnpm</code>, <code>yarn</code> or <code>npm</code>) installed in your computer.
+    <b>Obs:</b> you will need <code>poetry</code> and one of javascript package managers (<code>pnpm</code>, <code>yarn</code> or <code>npm</code>) install them in your computer.
 </p>
 
 <p>
@@ -116,13 +119,37 @@ $ pnpm install
     </li>
     <pre>$ ./generate_and_insert_data_sensor.sh</pre>
     <p>
-        <b>Obs:</b> the script <code>generate_and_insert_data_sensor.sh</code> checks the version of python and run two other scrips: <code>generate_sensor_data.py</code> and <code>insert_sensor_data.py</code>. It works correctly in Debian environments (Debian, Ubuntu, Linux Mint, etc) because of the structure of the directories. If your operational system is a different one, you should run the python scripts separately.
+        <b>Obs:</b> the script <code>generate_and_insert_data_sensor.sh</code> run two other scripts: <code>generate_sensor_data.py</code> and <code>insert_sensor_data.py</code>. It works correctly in Debian environments (Debian, Ubuntu, Linux Mint, etc) because of the structure of the directories. If your operational system is a different one, you should run the python scripts separately.
     </p>
     <p>
         <b>Obs:</b> it will create some data and insert in your database.
     </p>
+    <li>To test if the API is working, go to the <code>backend</code> folder and run</li>
+    <pre>$ fastapi dev app/main.py</pre>
+    <p>and try to access the url <code>http://127.0.0.1:8000/data-sensor</code>.</o>
+    <li>Then, with the API running go to the <code>frontend</code> folder and run</li>
+    <pre>$ npx swagger-typescript-api -p http://127.0.0.1:8000/openapi.json -o ./src/api -n api.ts</pre>
+    <p>
+        <b>Obs:</b> the command above will generate the types in <code>api.ts</code> which be used from the frontend.
+    </p>
     <li>
-        If everything goes well, just run the file <code>run_project.sh</code> to start both backend and front end
+        If everything goes well, stop the API working, to to the root of the repository and run the file <code>run_project.sh</code> to start both backend and front end
     </li>
     <pre>$ ./run_project.sh</pre>
+</ol>
+
+<h2>Teste de carga</h2>
+
+<p>
+    To run stress test, first you need to run the API in the backend. So,
+</p>
+
+<ol>
+    <li>Go to the <code>backend</code> folder and run</li>
+    <pre>$ fastapi dev app/main.py</pre>
+    <li>Then, in another terminal go back to the root of the repository and run the script <code>stress_test.sh</code></li>
+    <pre>$ ./stress_test.sh 500 60</pre>
+    <p>
+        <b>Obs:</b> this script receives two parameters: the first is the number of threads which will access the API simultaneously and the second is the interval in seconds they will try to access it. For example, in the command above 500 threads will access simultaneously the API for 60 second. In the end of the script, the program will print in the screen the metrics about this test.
+    </p>
 </ol>
