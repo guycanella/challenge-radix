@@ -3,7 +3,7 @@
 LAST_PYTHON_VERSION=$(find /usr/bin -name 'python*' | grep -E '^/usr/bin/python[0-9]+(\.[0-9]+)?$' | sed 's|/usr/bin/||' | sort -V | tail -n 1)
 
 if [ -z "$LAST_PYTHON_VERSION" ]; then
-    echo "No version was found in directory /usr/bin."
+    echo "No version of Python was found in directory /usr/bin. Please, install it and try again"
     exit 1
 fi
 
